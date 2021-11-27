@@ -10,6 +10,13 @@ function getFkConfig(ref, Sequelize) {
   };
 }
 
+function getUniqueKeyName(sqlData) {
+  return sqlData.constraint
+    .replace(`${sqlData.table}_`, '')
+    .replace('_key', '');
+}
+
 module.exports = {
-  getFkConfig
+  getFkConfig,
+  getUniqueKeyName
 };

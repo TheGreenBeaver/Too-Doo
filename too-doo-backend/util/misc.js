@@ -1,12 +1,29 @@
 const fs = require('fs');
 const path = require('path');
+const { ENVS } = require('./constants');
+require('dotenv').config();
+
+
+/**
+ * Get env variable value
+ * @param {string} name
+ * @param {string=} [defaultVal = '']
+ * @return {string}
+ */
+function getVar(name, defaultVal = '') {
+  return process.env[name] || defaultVal;
+}
 
 /**
  *
- * @return {string} the env to use
+ * @return {string} the current env to use
  */
 function getEnv() {
-  return process.env.NODE_ENV || 'dev';
+  return getVar('NODE_ENV', ENVS.dev).toLowerCase();
+}
+
+function isDev() {
+  return getEnv() === ENVS.dev;
 }
 
 /**
@@ -37,5 +54,7 @@ function getParentDir(dirname, lvl = 1) {
 module.exports = {
   getEnv,
   getMeaningfulFiles,
-  getParentDir
+  getParentDir,
+  isDev,
+  getVar
 };

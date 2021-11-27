@@ -8,7 +8,7 @@ const path = require('path');
  * @param {Object} options
  * @param {string} options.prefix only apply middleware from files with specified prefix
  * @param {string=} [options.prop = 'use'] `applyTo` method to apply middleware
- * @param {Array<{ prop: string=, path: string= }>=} options.routes only apply middleware for specific routes
+ * @param {Array<{ prop: string=, path: string= } | string>=} options.routes only apply middleware for specific routes
  */
 function useMiddleware(applyTo, { prefix, prop = 'use', routes } = {}) {
   getMeaningfulFiles(__dirname, __filename)
