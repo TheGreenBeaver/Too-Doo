@@ -21,8 +21,7 @@ async function authorizeWithToken({ username, password }, res) {
   if (!compareHashed(password, user.password)) {
     throw new AuthError(true);
   } else {
-    // user.createToken() does not return the fresh token
-    const authToken = await AuthToken.create({ user_id: user.id });
+    const authToken = await user.createToken();
     return res.json({ token: authToken.key });
   }
 }

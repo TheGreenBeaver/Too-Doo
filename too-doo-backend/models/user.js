@@ -13,7 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.AuthToken, {
         foreignKey: 'user_id',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        as: 'tokens'
+      });
+
+      this.hasMany(models.ToDo, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        as: 'toDos'
       });
     }
   }
