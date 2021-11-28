@@ -33,7 +33,7 @@ const theme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: 'contained'
-      },
+      }
     },
 
     MuiIconButton: {
@@ -42,14 +42,22 @@ const theme = createTheme({
       }
     },
 
-    MuiContainer: {
+    MuiScopedCssBaseline: {
       styleOverrides: {
-        maxWidthLg: {
-          maxWidth: '1480px !important',
-          background: blueGrey[700]
-        },
         root: {
-          minHeight: '100vh !important'
+          background: blueGrey[700],
+          minHeight: '100vh !important',
+          minWidth: 514
+        }
+      }
+    },
+
+    MuiFormControl: {
+      styleOverrides: {
+        marginNormal: {
+          '&:first-of-type': {
+            marginTop: 0
+          }
         }
       }
     }

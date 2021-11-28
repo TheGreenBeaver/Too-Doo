@@ -59,7 +59,7 @@ function Header() {
             sx={{
               color: 'primary.contrastText',
               '&:hover': {
-                color: 'primary.light'
+                color: 'secondary.main'
               }
             }}
           >

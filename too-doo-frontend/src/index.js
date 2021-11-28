@@ -25,8 +25,8 @@ import AxiosContext from './contexts/axios-context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ScopedCssBaseline>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <ScopedCssBaseline>
         <AlertSystem>
           <ReduxProvider store={store}>
             <Router>
@@ -38,8 +38,8 @@ ReactDOM.render(
             </Router>
           </ReduxProvider>
         </AlertSystem>
-      </ThemeProvider>
-    </ScopedCssBaseline>
+      </ScopedCssBaseline>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
