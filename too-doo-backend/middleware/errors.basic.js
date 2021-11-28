@@ -1,4 +1,4 @@
-const { getValidationErrJson } = require('../util/misc');
+const { getValidationErrJson } = require('../util/sql');
 const { ValidationError } = require('sequelize');
 const httpStatus = require('http-status');
 

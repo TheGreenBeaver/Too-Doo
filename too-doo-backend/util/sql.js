@@ -16,7 +16,21 @@ function getUniqueKeyName(sqlData) {
     .replace('_key', '');
 }
 
+function getValidationErrJson(validationResult) {
+  return validationResult.errors.reduce(
+    (acc, err) => {
+      if (acc[err.path] == null) {
+        acc[err.path] = '';
+      } else {
+        acc[err.path] += ' ';
+      }
+      acc[err.path] += err.message;
+      return acc;
+    }, {})
+}
+
 module.exports = {
   getFkConfig,
-  getUniqueKeyName
+  getUniqueKeyName,
+  getValidationErrJson
 };

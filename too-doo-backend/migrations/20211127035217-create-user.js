@@ -20,6 +20,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('morze_user');
+    await queryInterface.dropTable('td_user');
   }
 };
