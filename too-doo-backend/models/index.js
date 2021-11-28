@@ -5,7 +5,12 @@ const { Sequelize, DataTypes } = require('sequelize');
 const { getMeaningfulFiles, getEnv, getParentDir } = require('../util/misc');
 
 const env = getEnv();
-const config = require(path.join(getParentDir(__dirname), 'config', 'config'))[env];
+let config;
+try {
+  config = require(path.join(getParentDir(__dirname), 'config', 'config'));
+} catch {
+  config = require('../config/config')[env];
+}
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 

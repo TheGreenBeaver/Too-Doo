@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  too-doo-postgres:
+    container_name: too-doo-postgres
+    image: postgres
+    environment: # Should NEVER be exposed in a real project, done like this for simplicity
+      POSTGRES_DB: "too_doo_prod"
+      POSTGRES_USER: "too_doo_user"
+      POSTGRES_PASSWORD: "prod-password"
+    ports:
+      - "5432:5432"
+  too-doo-backend:
+    build:
+      context: ./too-doo-backend
+    environment: # Should NEVER be exposed in a real project, done like this for simplicity
+      SECRET_KEY: "61e243a873f99cd49dab83dec01a63"
+      DB_NAME: "too_doo_prod"
+      DB_USERNAME: "too_doo_user"
+      DB_PASSWORD: "prod-password"
+      NODE_ENV: "prod"
+    ports:
+      - "8000:8000"
+    container_name: too-doo-backend
+    restart: always
+    links:
+      - too-doo-postgres
+    depends_on:
+      - too-doo-postgres
+  too-doo-frontend:
+    restart: always
+    build:
+      context: ./too-doo-frontend
+    ports:
+      - "80:80"
+    container_name: too-doo-frontend

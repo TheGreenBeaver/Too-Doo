@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { ENVS } = require('./constants');
-require('dotenv').config();
 
 
 /**
@@ -11,6 +10,9 @@ require('dotenv').config();
  * @return {string}
  */
 function getVar(name, defaultVal = '') {
+  try {
+    require('dotenv').config();
+  } catch {}
   return process.env[name] || defaultVal;
 }
 
