@@ -8,7 +8,7 @@ function handleUniqueConstraintError(err, req, res, next) {
   if (err instanceof UniqueConstraintError) {
     const { parent } = err;
     const failedUnique = getUniqueKeyName(parent);
-    const failedModel = Object.values(models).find(model => model.tableName === parent.table).modelName;
+    const failedModel = Object.entries(models).find(([, model]) => model.getTableName() === parent.table)[0];
     return res
       .status(httpStatus.BAD_REQUEST)
       .json({ [failedUnique]: [`${failedModel} with such ${failedUnique} already exists`] });
