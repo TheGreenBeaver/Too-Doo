@@ -1,0 +1,15 @@
+.td-header_logo {
+  height: calc(56px * 0.8);
+}
+
+@media (min-width: 0) and (orientation: landscape) {
+  .td-header_logo {
+    height: calc(48px * 0.8);
+  }
+}
+
+@media (min-width: 600px) {
+  .td-header_logo {
+    height: calc(64px * 0.8);
+  }
+}

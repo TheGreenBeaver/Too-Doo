@@ -18,6 +18,41 @@ const theme = createTheme({
     },
     contrastThreshold: 3,
     tonalOffset: 0.2
+  },
+
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        fullWidth: true,
+        margin: 'normal',
+        variant: 'outlined',
+        size: 'small'
+      }
+    },
+
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained'
+      },
+    },
+
+    MuiIconButton: {
+      defaultProps: {
+        color: 'primary'
+      }
+    },
+
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          maxWidth: '1480px !important',
+          background: blueGrey[700]
+        },
+        root: {
+          minHeight: '100vh !important'
+        }
+      }
+    }
   }
 });
 

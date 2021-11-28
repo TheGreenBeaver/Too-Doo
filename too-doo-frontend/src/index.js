@@ -19,6 +19,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import AlertSystem from './components/alert-system';
+import Container from '@mui/material/Container';
+import AxiosContext from './contexts/axios-context';
 
 
 ReactDOM.render(
@@ -28,7 +30,11 @@ ReactDOM.render(
         <AlertSystem>
           <ReduxProvider store={store}>
             <Router>
-              <App />
+              <AxiosContext>
+                <Container>
+                  <App />
+                </Container>
+              </AxiosContext>
             </Router>
           </ReduxProvider>
         </AlertSystem>
