@@ -1,7 +1,15 @@
 const { getValidationErrJson } = require('../util/sql');
-const { ValidationError } = require('sequelize');
+const { ValidationError, EmptyResultError } = require('sequelize');
 const httpStatus = require('http-status');
 
+
+function handleNotFoundError(err, req, res, next) {
+  if (err instanceof EmptyResultError) {
+    return res.status(httpStatus.NOT_FOUND).end();
+  }
+
+  next(err);
+}
 
 function handleValidationError(err, req, res, next) {
   if (err instanceof ValidationError) {
@@ -17,6 +25,7 @@ function handleUnknownError(err, req, res, next) {
 
 module.exports = {
   stack: [
+    handleNotFoundError,
     handleValidationError,
     handleUnknownError
   ],

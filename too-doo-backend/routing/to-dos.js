@@ -17,4 +17,22 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.get('/', async (req, res, next) => {
+  try {
+    const allToDos = await req.user.getToDos();
+    return res.json(allToDos.map(serializeToDo));
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const matchingToDos = await req.user.getToDos({ where: { id: req.params.id }, rejectOnEmpty: true });
+    return res.json(serializeToDo(matchingToDos[0]));
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
