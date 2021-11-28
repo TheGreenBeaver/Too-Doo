@@ -49,4 +49,15 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const matchingToDos = await req.user.getToDos({ where: { id: req.params.id }, rejectOnEmpty: true });
+    const theToDo = matchingToDos[0];
+    await theToDo.destroy();
+    return res.status(httpStatus.NO_CONTENT).end();
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
