@@ -32,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         VALIDATIONS.required,
         { name: VALIDATIONS.len, args: [0, 500] }
       ])
+    },
+    done: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     sequelize,
