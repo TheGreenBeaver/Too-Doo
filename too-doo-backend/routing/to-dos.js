@@ -1,7 +1,7 @@
 const express = require('express');
 const useMiddleware = require('../middleware');
 const httpStatus = require('http-status');
-const { serializeToDo } = require('../serializers/to-dos');
+const { serializeToDo, serializeToDoShort } = require('../serializers/to-dos');
 const { pickBy } = require('lodash');
 
 
@@ -21,7 +21,7 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const allToDos = await req.user.getToDos();
-    return res.json(allToDos.map(serializeToDo));
+    return res.json(allToDos.map(serializeToDoShort));
   } catch (e) {
     next(e);
   }

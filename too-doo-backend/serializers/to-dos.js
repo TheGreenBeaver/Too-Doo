@@ -4,4 +4,8 @@ function serializeToDo(data) {
   return omit(data.dataValues, 'user_id');
 }
 
-module.exports = { serializeToDo }
+function serializeToDoShort(data) {
+  return omit(data.dataValues, ['user_id', 'description']);
+}
+
+module.exports = { serializeToDo, serializeToDoShort }
