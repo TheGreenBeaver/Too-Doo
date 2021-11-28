@@ -9,9 +9,10 @@ import { useHistory } from 'react-router-dom';
 import { useAxios } from '../../contexts/axios-context';
 import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
 import { useSnackbar } from 'notistack';
+import Alert from '@mui/material/Alert';
 
 
-function DeleteToDoDialog({ toDoId, open, onClose }) {
+function DeleteToDoDialog({ toDoId, open, onClose, done }) {
   const history = useHistory();
   const [isProcessing, setIsProcessing] = useState(false);
   const { api } = useAxios();
@@ -41,6 +42,13 @@ function DeleteToDoDialog({ toDoId, open, onClose }) {
         <DialogContentText>
           Are you sure you want to delete this ticket?
         </DialogContentText>
+
+        {
+          !done &&
+          <Alert severity='warning' sx={{ mt: 2 }}>
+            Warning: this Ticket is not Done yet!
+          </Alert>
+        }
       </DialogContent>
 
       <DialogActions>
@@ -58,7 +66,8 @@ function DeleteToDoDialog({ toDoId, open, onClose }) {
 DeleteToDoDialog.propTypes = {
   toDoId: number,
   open: bool.isRequired,
-  onClose: func.isRequired
+  onClose: func.isRequired,
+  done: bool
 };
 
 export default DeleteToDoDialog;

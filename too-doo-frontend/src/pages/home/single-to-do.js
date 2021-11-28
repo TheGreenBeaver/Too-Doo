@@ -8,11 +8,13 @@ import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { DeleteOutline } from '@mui/icons-material';
+import { CheckCircle, DeleteOutline } from '@mui/icons-material';
 import { isEmpty, isEqual } from 'lodash';
 import DeleteToDoDialog from './delete-to-do-dialog';
 import Box from '@mui/material/Box';
 import { formatTime } from '../../util/misc';
+import { Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 
 const NEW_STATE = {
@@ -26,6 +28,7 @@ function SingleToDo({ state }) {
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
 
   const { api } = useAxios();
 
@@ -74,6 +77,15 @@ function SingleToDo({ state }) {
       });
   }
 
+  function toggleDone() {
+    setIsToggling(true);
+    api(HTTP_ENDPOINTS.updateToDo, toDo.id, { done: !toDo.done }).call()
+      .then(toDoData => {
+        setToDo(toDoData);
+        setIsToggling(false);
+      });
+  }
+
   if (!isNew && !toDo) {
     return <Typography>Heating up...</Typography>;
   }
@@ -112,16 +124,30 @@ function SingleToDo({ state }) {
       >
         {
           !isNew &&
-          <Box>
+          <Box width='100%' position='relative'>
             <Typography color='textSecondary'>
               Created: {formatTime(toDo.createdAt)}
             </Typography>
             {
               toDo.createdAt !== toDo.updatedAt &&
               <Typography color='textSecondary'>
-                Edited: {formatTime(toDo.updatedAt)}
+                Updated: {formatTime(toDo.updatedAt)}
               </Typography>
             }
+
+            <Tooltip title={`Mark as ${toDo.done ? 'pending' : 'done'}`}>
+              <IconButton
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: theme => theme.spacing(1)
+                }}
+                onClick={toggleDone}
+                disabled={isToggling}
+              >
+                <CheckCircle sx={{ color: toDo.done ? 'success.light' : 'grey.600' }} />
+              </IconButton>
+            </Tooltip>
             <Box mb={1}/>
           </Box>
         }
@@ -133,6 +159,7 @@ function SingleToDo({ state }) {
             variant: 'h4',
             gutterBottom: true
           }}
+          disabled={isToggling}
         />
         <EditableText
           name='description'
@@ -146,6 +173,7 @@ function SingleToDo({ state }) {
               wordBreak: 'break-all'
             }
           }}
+          disabled={isToggling}
         />
       </EditableViewWrapper>
 
@@ -153,6 +181,7 @@ function SingleToDo({ state }) {
         onClose={() => setIsDeleteDialogOpen(false)}
         open={isDeleteDialogOpen}
         toDoId={toDo?.id}
+        done={toDo?.done}
       />
     </>
   );

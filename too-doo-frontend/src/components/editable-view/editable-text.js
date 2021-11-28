@@ -17,15 +17,16 @@ function EditableText({ name, typographyProps, ...otherProps }) {
     return <Typography {...typographyProps}>{field.value}</Typography>
   }
 
+  const props = { ...field, ...otherProps };
+
   return (
     <TextField
       margin='dense'
       fullWidth={false}
-      {...field}
       disabled={isSubmitting}
       error={!!err}
       helperText={err}
-      {...otherProps}
+      {...props}
     />
   );
 }

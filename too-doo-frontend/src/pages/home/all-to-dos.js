@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useAxios } from '../../contexts/axios-context';
 import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import HoverPaper from '../../components/hover-paper';
 import { formatTime } from '../../util/misc';
+import IconButton from '@mui/material/IconButton';
+import { CheckCircle } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 
 
 function AllToDos() {
   const [toDos, setToDos] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [isToggling, setIsToggling] = useState(null);
+  const history = useHistory();
 
   const { api } = useAxios();
 
@@ -26,6 +31,16 @@ function AllToDos() {
 
     fetchToDos();
   }, []);
+
+  function toggleDone(e, toDo) {
+    e.stopPropagation();
+    setIsToggling(toDo.id);
+    api(HTTP_ENDPOINTS.updateToDo, toDo.id, { done: !toDo.done }).call()
+      .then(toDoData => {
+        setToDos(curr => curr.map(item => item.id === toDo.id ? toDoData : item));
+        setIsToggling(null);
+      });
+  }
 
   if (isFetching) {
     return <Typography>Heating up...</Typography>;
@@ -49,32 +64,44 @@ function AllToDos() {
   }
 
   return toDos.map(toDo =>
-    <Link
+    <HoverPaper
       key={toDo.id}
-      to={`${LINKS.home}/${toDo.id}`}
-      style={{ textDecoration: 'none' }}
+      sx={{
+        p: [2, 1],
+        mb: 2,
+        position: 'relative',
+        cursor: 'pointer'
+      }}
+      onClick={() => history.push(`${LINKS.home}/${toDo.id}`)}
     >
-      <HoverPaper
-        sx={{
-          p: [2, 1],
-          mb: 2
-        }}
-      >
-        <Typography sx={{ mb: 1 }} variant='h4'>
-          {toDo.title}
-        </Typography>
+      <Typography sx={{ mb: 1, textDecoration: toDo.done ? 'line-through' : 'none' }} variant='h4'>
+        {toDo.title}
+      </Typography>
 
-        <Typography color='textSecondary' >
-          Created: {formatTime(toDo.createdAt)}
+      <Tooltip title={`Mark as ${toDo.done ? 'pending' : 'done'}`}>
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: theme => theme.spacing(2),
+            right: theme => theme.spacing(1)
+          }}
+          onClick={e => toggleDone(e, toDo)}
+          disabled={isToggling === toDo.id}
+        >
+          <CheckCircle sx={{ color: toDo.done ? 'success.light' : 'grey.600' }} />
+        </IconButton>
+      </Tooltip>
+
+      <Typography color='textSecondary'>
+        Created: {formatTime(toDo.createdAt)}
+      </Typography>
+      {
+        toDo.createdAt !== toDo.updatedAt &&
+        <Typography color='textSecondary'>
+          Updated: {formatTime(toDo.updatedAt)}
         </Typography>
-        {
-          toDo.createdAt !== toDo.updatedAt &&
-          <Typography color='textSecondary'>
-            Edited: {formatTime(toDo.updatedAt)}
-          </Typography>
-        }
-      </HoverPaper>
-    </Link>
+      }
+    </HoverPaper>
   );
 }
 
