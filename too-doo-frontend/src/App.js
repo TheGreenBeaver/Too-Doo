@@ -10,6 +10,7 @@ import { setUserData } from './store/actions/account';
 import { useAxios } from './contexts/axios-context';
 import SignIn from './pages/sign-in';
 import SignUp from './pages/sign-up';
+import Home from './pages/home';
 
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
   return (
     <Layout>
       <Switch>
-        <Route path={`${LINKS.home}/:state?`} render={() => 'Home'} />
+        <Route path={`${LINKS.home}/:state?`} component={Home} />
         <Route path={LINKS.signUp} component={SignUp} />
         <Route path={LINKS.signIn} component={SignIn} />
         <Redirect to={LINKS.home} />

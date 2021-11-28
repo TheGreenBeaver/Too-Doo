@@ -26,6 +26,32 @@ const HTTP_ENDPOINTS = {
     url: '/auth/log_out',
     withAuth: true
   },
+
+  createToDo: {
+    method: HTTP_METHODS.post,
+    url: '/to_dos',
+    withAuth: true
+  },
+  listToDos: {
+    method: HTTP_METHODS.get,
+    url: '/to_dos',
+    withAuth: true
+  },
+  getToDo: {
+    method: HTTP_METHODS.get,
+    url: id => `/to_dos/${id}`,
+    withAuth: true
+  },
+  updateToDo: {
+    method: HTTP_METHODS.patch,
+    url: id => `/to_dos/${id}`,
+    withAuth: true
+  },
+  deleteToDo: {
+    method: HTTP_METHODS.delete,
+    url: id => `to_dos/${id}`,
+    withAuth: true
+  }
 };
 
 const LINKS = {
@@ -35,6 +61,8 @@ const LINKS = {
 
   newToDo: '/to_dos/new'
 };
+
+const NEW_ROUTE = 'new';
 
 const OOPS = 'Some temporary issues, please try again later';
 
