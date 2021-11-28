@@ -12,7 +12,7 @@ import LoadingButton from '../../components/loading-button';
 import { startCase } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { logInAction } from '../../store/actions/account';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 const FIELDS = [
@@ -25,7 +25,7 @@ const yupConfig = FIELDS.reduce((config, f) => ({
 }), {});
 
 function SignUp() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const { api } = useAxios();
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ function SignUp() {
       .then(data => {
         enqueueSnackbar('Signed up for Too Doo successfully!', { variant: 'success' });
         dispatch(logInAction(data.token));
-        navigate(LINKS.home, { replace: true });
+        history.replace(LINKS.home)
       })
       .catch(e => {
         formikHelpers.setSubmitting(false);

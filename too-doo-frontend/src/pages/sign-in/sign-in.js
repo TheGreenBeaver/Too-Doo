@@ -11,11 +11,11 @@ import LoadingButton from '../../components/loading-button';
 import ErrorPrompt from '../../components/error-prompt';
 import { useDispatch } from 'react-redux';
 import { logInAction } from '../../store/actions/account';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 function SignIn() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { api } = useAxios();
   const dispatch = useDispatch();
   const [credentialsError, setCredentialsError] = useState(null);
@@ -26,7 +26,7 @@ function SignIn() {
     api(HTTP_ENDPOINTS.signIn, values).call()
       .then(data => {
         dispatch(logInAction(data.token));
-        navigate(LINKS.home, { replace: true });
+        history.replace(LINKS.home);
       })
       .catch(e => {
         formikHelpers.setSubmitting(false);

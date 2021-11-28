@@ -4,10 +4,10 @@ import CenterBox from '../center-box';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import { Outlet } from 'react-router-dom';
+import { node } from 'prop-types';
 
 
-function OneCardLayout() {
+function OneCardLayout({ children }) {
 
   return (
     <CenterBox minHeight='100vh' sx={{ p: 3 }}>
@@ -17,11 +17,15 @@ function OneCardLayout() {
           sx={{ height: 100, backgroundSize: 'contain !important' }}
         />
         <CardContent>
-          <Outlet />
+          {children}
         </CardContent>
       </Card>
     </CenterBox>
   );
 }
+
+OneCardLayout.propTypes = {
+  children: node.isRequired
+};
 
 export default OneCardLayout;

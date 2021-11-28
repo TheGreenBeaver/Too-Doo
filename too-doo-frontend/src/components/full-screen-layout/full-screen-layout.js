@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../header';
 import Box from '@mui/material/Box';
 import { matchToolbar } from '../../util/theme';
-import { Outlet } from 'react-router-dom';
+import { node } from 'prop-types';
 
 
-function FullScreenLayout() {
+function FullScreenLayout({ children }) {
 
   return (
     <React.Fragment>
@@ -17,10 +17,14 @@ function FullScreenLayout() {
           height: 'fit-content'
         }}
       >
-        <Outlet />
+        {children}
       </Box>
     </React.Fragment>
   );
 }
+
+FullScreenLayout.propTypes = {
+  children: node.isRequired
+};
 
 export default FullScreenLayout;

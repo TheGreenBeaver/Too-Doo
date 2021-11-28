@@ -1,8 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import FullScreenLayout from './components/full-screen-layout';
 import OneCardLayout from './components/one-card-layout';
 import { HTTP_ENDPOINTS, LINKS } from './util/constants';
-import RequireAuth from './components/require-auth';
 import useClearPath from './hooks/use-clear-path';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,20 +41,14 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route
-          path={LINKS.home}
-          element={
-            <RequireAuth>
-              <div>Home</div>
-            </RequireAuth>
-          }
-        />
-        <Route path={LINKS.signUp} element={<SignUp />} />
-        <Route path={LINKS.signIn} element={<SignIn />} />
-      </Route>
-    </Routes>
+    <Layout>
+      <Switch>
+        <Route path={`${LINKS.home}/:state?`} render={() => 'Home'} />
+        <Route path={LINKS.signUp} component={SignUp} />
+        <Route path={LINKS.signIn} component={SignIn} />
+        <Redirect to={LINKS.home} />
+      </Switch>
+    </Layout>
   );
 }
 

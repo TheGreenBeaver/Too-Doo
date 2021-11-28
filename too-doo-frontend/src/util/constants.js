@@ -29,9 +29,11 @@ const HTTP_ENDPOINTS = {
 };
 
 const LINKS = {
-  home: '/',
+  home: '/to_dos',
   signIn: '/sign_in',
-  signUp: '/sign_up'
+  signUp: '/sign_up',
+
+  newToDo: '/to_dos/new'
 };
 
 const OOPS = 'Some temporary issues, please try again later';
@@ -49,5 +51,6 @@ export {
   LINKS,
   OOPS,
   ENVS,
-  API_ROOT
+  API_ROOT,
+  NEW_ROUTE
 };
