@@ -9,6 +9,7 @@ import { clearError } from './store/actions/general';
 import { setUserData } from './store/actions/account';
 import { useAxios } from './contexts/axios-context';
 import { getDefaultRoute, routes } from './util/routing';
+import Loading from './components/loading';
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
   }
 
   if (isAuthorized && !userData) {
-    return 'loading...';
+    return <Loading />;
   }
 
   return (

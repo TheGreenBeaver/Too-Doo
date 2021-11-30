@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import { formatTime } from '../../util/misc';
 import { Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import Loading from '../../components/loading';
 
 
 const NEW_STATE = {
@@ -87,7 +88,7 @@ function SingleToDo({ state }) {
   }
 
   if (!isNew && !toDo) {
-    return <Typography>Heating up...</Typography>;
+    return <Loading />;
   }
 
   return (

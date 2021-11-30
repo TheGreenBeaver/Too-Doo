@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useAxios } from '../../contexts/axios-context';
 import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
 import Typography from '@mui/material/Typography';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import HoverPaper from '../../components/hover-paper';
 import { formatTime } from '../../util/misc';
 import IconButton from '@mui/material/IconButton';
 import { CheckCircle } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
+import Loading from '../../components/loading';
 
 
 function AllToDos() {
@@ -43,7 +44,7 @@ function AllToDos() {
   }
 
   if (isFetching) {
-    return <Typography>Heating up...</Typography>;
+    return <Loading />;
   }
 
   if (!toDos.length) {
