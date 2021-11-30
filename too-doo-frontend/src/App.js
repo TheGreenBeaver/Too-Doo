@@ -1,16 +1,14 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
 import FullScreenLayout from './components/full-screen-layout';
 import OneCardLayout from './components/one-card-layout';
-import { HTTP_ENDPOINTS, LINKS } from './util/constants';
+import { HTTP_ENDPOINTS } from './util/constants';
 import useClearPath from './hooks/use-clear-path';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError } from './store/actions/general';
 import { setUserData } from './store/actions/account';
 import { useAxios } from './contexts/axios-context';
-import SignIn from './pages/sign-in';
-import SignUp from './pages/sign-up';
-import Home from './pages/home';
+import { getDefaultRoute, routes } from './util/routing';
 
 
 function App() {
@@ -44,10 +42,18 @@ function App() {
   return (
     <Layout>
       <Switch>
-        <Route path={`${LINKS.home}/:state?`} component={Home} />
-        <Route path={LINKS.signUp} component={SignUp} />
-        <Route path={LINKS.signIn} component={SignIn} />
-        <Redirect to={LINKS.home} />
+        {
+          routes
+            .filter(routeConfig => routeConfig.auth === isAuthorized)
+            .map(routeConfig =>
+              <Route
+                key={routeConfig.path}
+                path={routeConfig.path}
+                component={routeConfig.component}
+              />
+            )
+        }
+        <Redirect to={getDefaultRoute(isAuthorized)} />
       </Switch>
     </Layout>
   );

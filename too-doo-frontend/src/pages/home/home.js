@@ -1,5 +1,4 @@
 import React from 'react';
-import RequireAuth from '../../components/require-auth';
 import Button from '@mui/material/Button';
 import { LINKS, NEW_ROUTE } from '../../util/constants';
 import CenterBox from '../../components/center-box';
@@ -17,41 +16,39 @@ function Home() {
   const state = params?.state;
 
   return (
-    <RequireAuth>
-      <CenterBox pt={2} pb={4}>
-        <Box
-          sx={{
-            width: { xs: '90vw', md: '70vw' },
-            maxWidth: 800,
-            minWidth: 450
-          }}
-        >
-          <Box display='flex' alignItems='center' justifyContent='space-between' mb={2}>
-            <Button
-              startIcon={<ArrowBack />}
-              onClick={() => history.push(LINKS.home)}
-              style={{ visibility: state ? 'visible': 'hidden' }}
-            >
-              Back
-            </Button>
+    <CenterBox pt={2} pb={4}>
+      <Box
+        sx={{
+          width: { xs: '90vw', md: '70vw' },
+          maxWidth: 800,
+          minWidth: 450
+        }}
+      >
+        <Box display='flex' alignItems='center' justifyContent='space-between' mb={2}>
+          <Button
+            startIcon={<ArrowBack />}
+            onClick={() => history.push(LINKS.home)}
+            style={{ visibility: state ? 'visible' : 'hidden' }}
+          >
+            Back
+          </Button>
 
-            <Button
-              startIcon={<AddTwoTone />}
-              onClick={() => history.push(LINKS.newToDo)}
-              disabled={state === NEW_ROUTE}
-            >
-              New Ticket
-            </Button>
-          </Box>
-
-          {
-            state
-              ? <SingleToDo state={state} />
-              : <AllToDos />
-          }
+          <Button
+            startIcon={<AddTwoTone />}
+            onClick={() => history.push(LINKS.newToDo)}
+            disabled={state === NEW_ROUTE}
+          >
+            New Ticket
+          </Button>
         </Box>
-      </CenterBox>
-    </RequireAuth>
+
+        {
+          state
+            ? <SingleToDo state={state} />
+            : <AllToDos />
+        }
+      </Box>
+    </CenterBox>
   );
 }
 
