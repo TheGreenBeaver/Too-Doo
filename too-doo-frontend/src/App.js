@@ -9,6 +9,7 @@ import { clearError } from './store/actions/general';
 import { setUserData } from './store/actions/account';
 import { useAxios } from './contexts/axios-context';
 import { getDefaultRoute, routes } from './util/routing';
+import ErrorPage from './pages/error-page';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
   }, [isAuthorized]);
 
   if (error) {
-    return 'error!';
+    return <ErrorPage />;
   }
 
   if (isAuthorized && !userData) {
