@@ -26,11 +26,10 @@ jobs:
           node-version: '12'
           cache: 'yarn'
 
-      - name: Navigate to Frontend root directory
-        run: cd too-doo-frontend
-
       - name: Install dependencies
+        working-directory: too-doo-frontend
         run: yarn install
 
       - name: Run tests
+        working-directory: too-doo-frontend
         run: yarn test

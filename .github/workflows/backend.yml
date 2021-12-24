@@ -37,14 +37,14 @@ jobs:
       - name: Checkout code to runner
         uses: actions/checkout@v2
 
-      - name: Navigate to Backend root directory
-        run: cd too-doo-backend
-
       - name: Install dependencies
+        working-directory: too-doo-backend
         run: npm install
 
       - name: Configure database and fill it with data
+        working-directory: too-doo-backend
         run: npm run pretest
 
       - name: Run tests
+        working-directory: too-doo-backend
         run: npm run test
