@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "prod": "sequelize-cli db:migrate --env prod && node index.js",
+    "pretest": "sequelize-cli db:migrate --env test && sequelize-cli db:seed:all",
     "test": "echo \"No tests to run yet\""
   },
   "keywords": [],
