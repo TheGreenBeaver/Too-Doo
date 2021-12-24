@@ -44,10 +44,10 @@ jobs:
         run: npm install
 
       - name: Configure database
-        run: sequelize-cli db:migrate --env test
+        run: npx sequelize-cli db:migrate --env test
 
       - name: Fill the database with test data
-        run: sequelize-cli db:seed:all
+        run: npx sequelize-cli db:seed:all
 
       - name: Run tests
         run: npm test

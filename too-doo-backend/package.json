@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "prod": "sequelize-cli db:migrate --env prod && node index.js"
+    "prod": "sequelize-cli db:migrate --env prod && node index.js",
+    "test": "echo \"No tests to run yet\""
   },
   "keywords": [],
   "author": "TheGreenBeaver",
