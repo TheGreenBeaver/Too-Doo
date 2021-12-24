@@ -1,0 +1,50 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [develop, master]
+    paths:
+      - "too-doo-backend/**"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "too-doo-backend/**"
+
+jobs:
+  run-tests:
+    env:
+      SECRET_KEY: "61e243a873f99cd49dab83dec01a63"
+      NODE_ENV: "test"
+
+    runs-on: ubuntu-latest
+    container: node:14-alpine
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: too_doo_user
+          POSTGRES_DB: too_doo_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code to runner
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        working-directory: too-doo-backend
+        run: npm install
+
+      - name: Configure database and fill it with data
+        working-directory: too-doo-backend
+        run: npm run pretest
+
+      - name: Run tests
+        working-directory: too-doo-backend
+        run: npm run test
