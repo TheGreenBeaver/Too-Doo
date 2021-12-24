@@ -1,0 +1,36 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ develop, master ]
+    paths:
+      - 'too-doo-frontend/**'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - 'too-doo-frontend/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code to runner
+        uses: actions/checkout@v2
+
+      - name: Set up JS environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
+
+      - name: Navigate to Backend root directory
+        run: cd too-doo-frontend
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: yarn test
