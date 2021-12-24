@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAxios } from '../../contexts/axios-context';
-import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
+import { LINKS } from '../../util/constants';
 import Typography from '@mui/material/Typography';
 import { useHistory } from 'react-router-dom';
 import HoverPaper from '../../components/hover-paper';
@@ -9,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import { CheckCircle } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 import Loading from '../../components/loading';
+import apiService from '../../util/api';
 
 
 function AllToDos() {
@@ -17,13 +17,11 @@ function AllToDos() {
   const [isToggling, setIsToggling] = useState(null);
   const history = useHistory();
 
-  const { api } = useAxios();
-
   useEffect(() => {
     const fetchToDos = async () => {
       setIsFetching(true);
       try {
-        const toDosData = await api(HTTP_ENDPOINTS.listToDos).call();
+        const toDosData = await apiService.listToDos();
         setToDos(toDosData);
       } finally {
         setIsFetching(false);
@@ -36,7 +34,7 @@ function AllToDos() {
   function toggleDone(e, toDo) {
     e.stopPropagation();
     setIsToggling(toDo.id);
-    api(HTTP_ENDPOINTS.updateToDo, toDo.id, { done: !toDo.done }).call()
+    apiService.updateToDo(toDo.id, { done: !toDo.done })
       .then(toDoData => {
         setToDos(curr => curr.map(item => item.id === toDo.id ? toDoData : item));
         setIsToggling(null);

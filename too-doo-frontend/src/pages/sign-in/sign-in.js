@@ -5,25 +5,24 @@ import * as Yup from 'yup';
 import PasswordField from '../../components/password-field';
 import StyledLink from '../../components/styled-link';
 import formSX from '../../theme/form';
-import { useAxios } from '../../contexts/axios-context';
-import { ERR_FIELD, HTTP_ENDPOINTS, LINKS } from '../../util/constants';
+import { ERR_FIELD, LINKS } from '../../util/constants';
 import LoadingButton from '../../components/loading-button';
 import ErrorPrompt from '../../components/error-prompt';
 import { useDispatch } from 'react-redux';
 import { logInAction } from '../../store/actions/account';
 import { useHistory } from 'react-router-dom';
+import apiService from '../../util/api';
 
 
 function SignIn() {
   const history = useHistory();
-  const { api } = useAxios();
   const dispatch = useDispatch();
   const [credentialsError, setCredentialsError] = useState(null);
 
   function onSubmit(values, formikHelpers) {
     setCredentialsError(null);
     formikHelpers.setSubmitting(true);
-    api(HTTP_ENDPOINTS.signIn, values).call()
+    apiService.signIn(values)
       .then(data => {
         dispatch(logInAction(data.token));
         history.replace(LINKS.home);

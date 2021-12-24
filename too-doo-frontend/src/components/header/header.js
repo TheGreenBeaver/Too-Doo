@@ -6,20 +6,17 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAxios } from '../../contexts/axios-context';
-import { HTTP_ENDPOINTS } from '../../util/constants';
 import { logOutAction } from '../../store/actions/account';
 import './header.styles.css';
+import apiService from '../../util/api';
 
 
 function Header() {
   const { username } = useSelector(state => state.account.userData);
-  const { api } = useAxios();
   const dispatch = useDispatch();
 
   function logOut() {
-    api(HTTP_ENDPOINTS.logOut).call()
-      .then(() => dispatch(logOutAction()))
+    apiService.logOut().then(() => dispatch(logOutAction()));
   }
 
   return (
