@@ -17,6 +17,7 @@ services:
       DB_NAME: "too_doo_prod"
       DB_USERNAME: "too_doo_user"
       DB_PASSWORD: "prod-password"
+      DB_HOST: "too-doo-postgres"
       NODE_ENV: "prod"
     ports:
       - "8000:8000"

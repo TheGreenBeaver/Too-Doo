@@ -10,11 +10,23 @@ module.exports = {
       underscored: true
     }
   },
+  test: {
+    username: 'too_doo_user',
+    password: 'password',
+    database: 'too_doo_test',
+    host: 'postgres',
+    port: 5432,
+    dialect: 'postgres',
+    define: {
+      underscored: true
+    },
+    logging: () => {}
+  },
   prod: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    host: 'too-doo-postgres',
+    host: process.env.DB_HOST, // don't stick to specific host in Docker
     port: 5432,
     dialect: 'postgres',
     define: {
