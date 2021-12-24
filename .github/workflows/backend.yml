@@ -12,7 +12,7 @@ on:
       - "too-doo-backend/**"
 
 jobs:
-  run-tests:
+  run-tests-be:
     env:
       SECRET_KEY: "61e243a873f99cd49dab83dec01a63"
       NODE_ENV: "test"
