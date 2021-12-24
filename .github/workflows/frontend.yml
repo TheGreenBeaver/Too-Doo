@@ -12,7 +12,7 @@ on:
       - 'too-doo-frontend/**'
 
 jobs:
-  build:
+  run-tests:
 
     runs-on: ubuntu-latest
 
