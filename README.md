@@ -35,3 +35,13 @@ This is a simple ToDo web app. Anyone can create an account, sign in and manage 
 - Run `docker compose up`
 - The app is available in your browser at `localhost`, or at the local IP address of your computer for any other
   computer in the same network
+
+## Running tests
+
+### Backend
+
+- Run `npm run test` (`npm run test:windows` if you are using Windows) in /too-doo-backend directory
+
+### Frontend
+
+- `yarn test` in /too-doo-frontend directory
