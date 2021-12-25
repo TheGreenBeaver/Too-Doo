@@ -6,16 +6,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
-import { useAxios } from '../../contexts/axios-context';
-import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
+import { LINKS } from '../../util/constants';
 import { useSnackbar } from 'notistack';
 import Alert from '@mui/material/Alert';
+import apiService from '../../util/api';
 
 
 function DeleteToDoDialog({ toDoId, open, onClose, done }) {
   const history = useHistory();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { api } = useAxios();
   const { enqueueSnackbar } = useSnackbar();
 
   function conditionalOnClose() {
@@ -26,7 +25,7 @@ function DeleteToDoDialog({ toDoId, open, onClose, done }) {
 
   function deleteToDo() {
     setIsProcessing(true);
-    api(HTTP_ENDPOINTS.deleteToDo, toDoId).call()
+    apiService.deleteToDo(toDoId)
       .then(() => {
         enqueueSnackbar('Ticket successfully deleted!');
         history.push(LINKS.home);

@@ -21,7 +21,7 @@ function getVar(name, defaultVal = '') {
  * @return {string} the current env to use
  */
 function getEnv() {
-  return getVar('NODE_ENV', ENVS.dev).toLowerCase();
+  return getVar('NODE_ENV', ENVS.dev).toLowerCase().trim();
 }
 
 function isDev() {

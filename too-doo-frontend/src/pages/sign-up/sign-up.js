@@ -6,13 +6,13 @@ import PasswordField from '../../components/password-field';
 import StyledLink from '../../components/styled-link';
 import formSX from '../../theme/form';
 import { useSnackbar } from 'notistack';
-import { useAxios } from '../../contexts/axios-context';
-import { HTTP_ENDPOINTS, LINKS } from '../../util/constants';
+import { LINKS } from '../../util/constants';
 import LoadingButton from '../../components/loading-button';
 import { startCase } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { logInAction } from '../../store/actions/account';
 import { useHistory } from 'react-router-dom';
+import apiService from '../../util/api';
 
 
 const FIELDS = [
@@ -27,12 +27,11 @@ const yupConfig = FIELDS.reduce((config, f) => ({
 function SignUp() {
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-  const { api } = useAxios();
   const dispatch = useDispatch();
 
   function onSubmit(values, formikHelpers) {
     formikHelpers.setSubmitting(true);
-    api(HTTP_ENDPOINTS.signUp, values).call()
+    apiService.signUp(values)
       .then(data => {
         enqueueSnackbar('Signed up for Too Doo successfully!', { variant: 'success' });
         dispatch(logInAction(data.token));

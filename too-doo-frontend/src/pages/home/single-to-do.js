@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { string } from 'prop-types';
-import { useAxios } from '../../contexts/axios-context';
 import { EditableViewWrapper, EditableText } from '../../components/editable-view';
-import { HTTP_ENDPOINTS, LINKS, NEW_ROUTE } from '../../util/constants';
+import { LINKS, NEW_ROUTE } from '../../util/constants';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
@@ -16,6 +15,7 @@ import { formatTime } from '../../util/misc';
 import { Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Loading from '../../components/loading';
+import apiService from '../../util/api';
 
 
 const NEW_STATE = {
@@ -31,11 +31,9 @@ function SingleToDo({ state }) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
 
-  const { api } = useAxios();
-
   useEffect(() => {
     const fetchToDo = async () => {
-      const toDoData = await api(HTTP_ENDPOINTS.getToDo, state).call();
+      const toDoData = await apiService.getToDo(state);
       setToDo(toDoData);
     };
 
@@ -45,7 +43,7 @@ function SingleToDo({ state }) {
   }, [state]);
 
   function onSubmit(values, { setSubmitting, setErrors }) {
-    const endpoint = isNew ? HTTP_ENDPOINTS.createToDo : HTTP_ENDPOINTS.updateToDo;
+    const apiFn = isNew ? 'createToDo' : 'updateToDo';
     const toUpdate = { ...values };
 
     if (!isNew) {
@@ -55,7 +53,6 @@ function SingleToDo({ state }) {
         }
       });
     }
-
     if (isEmpty(toUpdate)) {
       setSubmitting(false);
       return;
@@ -63,7 +60,7 @@ function SingleToDo({ state }) {
 
     const text = isNew ? 'created' : 'updated';
     const args = isNew ? [toUpdate] : [toDo.id, toUpdate];
-    api(endpoint, ...args).call()
+    apiService[apiFn](...args)
       .then(toDoData => {
         enqueueSnackbar(`Ticket successfully ${text}!`, { variant: 'success' });
         if (isNew) {
@@ -80,7 +77,7 @@ function SingleToDo({ state }) {
 
   function toggleDone() {
     setIsToggling(true);
-    api(HTTP_ENDPOINTS.updateToDo, toDo.id, { done: !toDo.done }).call()
+    apiService.updateToDo(toDo.id, { done: !toDo.done })
       .then(toDoData => {
         setToDo(toDoData);
         setIsToggling(false);
