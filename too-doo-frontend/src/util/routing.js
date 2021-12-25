@@ -64,4 +64,4 @@ function getDefaultRoute(isAuthorized) {
   return isAuthorized ? LINKS.home : LINKS.signIn;
 }
 
-export { routes, getDefaultRoute, pathExists };
+export { routes, getDefaultRoute, pathExists, getPathRegex };
