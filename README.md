@@ -1,6 +1,6 @@
 # Too-Doo
 
-Version: 0.2</br>
+Version: 2.2</br>
 Development process: https://trello.com/b/SKbmtyGE/too-doo
 
 ## Test results
