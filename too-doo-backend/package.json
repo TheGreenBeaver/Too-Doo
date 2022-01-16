@@ -5,7 +5,19 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "prod": "sequelize-cli db:migrate --env prod && node index.js"
+    "prod": "sequelize-cli db:migrate --env prod && node index.js",
+    "db:drop": "sequelize-cli db:drop --env test",
+    "db:create": "sequelize-cli db:create --env test",
+    "db:configure": "sequelize-cli db:migrate --env test && sequelize-cli db:seed:all --env test",
+    "pretest": "npm run db:drop && npm run db:create && npm run db:configure",
+    "test:windows": "npm run pretest && SET NODE_ENV=test && jest",
+    "test": "NODE_ENV=test && jest"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "keywords": [],
   "author": "TheGreenBeaver",
@@ -13,7 +25,9 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.5",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "express": "^4.17.1",
