@@ -3,6 +3,60 @@
 Version: 0.2</br>
 Development process: https://trello.com/b/SKbmtyGE/too-doo
 
+## Test results
+
+<table>
+  <tr>
+    <th></th>
+    <th>develop</th>
+    <th>master</th>
+  </tr>
+
+  <tr>
+    <td>
+      Backend
+    </td>
+    <td>
+      <a href="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/backend.yml?query=branch%3Adevelop">
+        <img 
+          src="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/backend.yml/badge.svg?branch=develop"
+          alt="backend-develop"
+        />
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/backend.yml?query=branch%3Amaster">
+        <img 
+          src="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/backend.yml/badge.svg?branch=master"
+          alt="backend-master"
+        />
+      </a>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      Frontend
+    </td>
+    <td>
+      <a href="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/frontend.yml?query=branch%3Adevelop">
+        <img 
+          src="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/frontend.yml/badge.svg?branch=develop"
+          alt="frontend-develop"
+        />
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/frontend.yml?query=branch%3Amaster">
+        <img 
+          src="https://github.com/TheGreenBeaver/Too-Doo/actions/workflows/frontend.yml/badge.svg?branch=master"
+          alt="frontend-master"
+        />
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Overview
 
 This is a simple ToDo web app. Anyone can create an account, sign in and manage their timetable.
